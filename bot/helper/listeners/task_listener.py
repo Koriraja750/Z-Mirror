@@ -307,13 +307,13 @@ class TaskListener(TaskConfig):
         )
         self.size = await get_path_size(up_dir)
 
-        if self.metadata:
-            await self.proceedMetadata(
-                up_path,
-                gid
-            )
-            if self.is_cancelled:
-                return
+        #if self.metadata:
+            #await self.proceedMetadata(
+                #up_path,
+                #gid
+            #)
+           # if self.is_cancelled:
+               # return
 
         if self.m_attachment:
             await self.proceedAttachment(
