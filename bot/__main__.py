@@ -331,32 +331,4 @@ async def main():
                 BotCommands.RestartCommand,
                 case_sensitive=True
             ) & CustomFilters.sudo
-        )
-    )
-    bot.add_handler( # type: ignore
-        MessageHandler(
-            ping,
-            filters=command(
-                BotCommands.PingCommand,
-                case_sensitive=True
-            ) & CustomFilters.sudo
-        )
-    )
-    bot.add_handler( # type: ignore
-        MessageHandler(
-            bot_help,
-            filters=command(
-                BotCommands.HelpCommand,
-                case_sensitive=True
-            ) & CustomFilters.authorized,
-        )
-    )
-    LOGGER.info("Bot Started Successfully!")
-    signal(
-        SIGINT,
-        exit_clean_up
-    )
 
-
-bot.loop.run_until_complete(main()) # type: ignore
-bot.loop.run_forever() # type: ignore
