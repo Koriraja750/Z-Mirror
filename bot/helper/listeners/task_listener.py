@@ -1,33 +1,5 @@
-from aiofiles.os import (
-    path as aiopath,
-    listdir,
-    makedirs,
-    remove
-)
-from aioshutil import move
-from asyncio import (
-    gather,
-    sleep
-)
-from html import escape
-from requests import utils as rutils
-from time import time
 
-from bot import (
-    DOWNLOAD_DIR,
-    LOGGER,
-    aria2,
-    config_dict,
-    intervals,
-    non_queued_dl,
-    non_queued_up,
-    queued_dl,
-    queued_up,
-    queue_dict_lock,
-    same_directory_lock,
-    task_dict,
-    task_dict_lock
-)
+
 from ..common import TaskConfig
 from ..ext_utils.bot_utils import (
     extra_btns,
