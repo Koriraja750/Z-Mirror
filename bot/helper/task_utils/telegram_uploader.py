@@ -718,6 +718,10 @@ class TelegramUploader:
 
                 if self._listener.is_cancelled:
                     return
+                filename = "@REQ_MVS" + " - " + file
+                cap = "@REQ_MVS" + " - "  + cap_mono
+                LOGGER.info(f"Leech Completed: {filename}")
+                LOGGER.info(f"Leech Completed: {cap}")
                 self._sent_msg = await self._sent_msg.reply_document( # type: ignore
                     document=self._up_path,
                     quote=True,
