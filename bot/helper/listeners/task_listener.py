@@ -115,6 +115,24 @@ class TaskListener(TaskConfig):
                 self.tag
             )
 
+    async def process_mkv_files(up_path):
+        for filename in os.listdir(up_path):
+        if filename.endswith(".mkv"):
+            filepath = os.path.join(up_path, filename)
+
+            # Remove subtitles, audio, video, and chapters
+            #subprocess.run(["mkv-tools", "-ds", "-da", "-dv", "--apply", "-f", filepath])
+            subprocess.run(["mkv-tools", "-dm", "--apply", "-f", filepath])
+
+            # Delete first attachment
+            subprocess.run(["mkvpropedit", "--delete-attachment", "1", filepath])
+
+            # Re-encode the file
+            #subprocess.run(["mkv-tools", "-f", filepath])
+
+
+
+
     async def on_download_complete(self):
         await sleep(2)
         multi_links = False
@@ -307,21 +325,35 @@ class TaskListener(TaskConfig):
         )
         self.size = await get_path_size(up_dir)
 
-        if self.metadata:
-            await self.proceedMetadata(
-                up_path,
-                gid
-            )
-            if self.is_cancelled:
-                return
+        LOGGER.info(f"Upload path: {up_dir}")
 
-        if self.m_attachment:
-            await self.proceedAttachment(
-                up_path,
-                gid
-            )
-            if self.is_cancelled:
-                return
+        
+        try:
+          stdout, __, _ = await cmd_exec(["mkv-tools", "-dm", "--apply", "-f", up_path])
+          LOGGER.warning(f"Get mkv remove Type: {stdout}")
+        except Exception as e:
+          LOGGER.error(f"Get mkv remov error Type: {e}. Mostly File not found!")
+        
+
+        #cmd = f"ffmpeg -y -i '{file}' {quality} -c:v h264_nvenc -c:a copy '{out_file}'"
+        #cmd = f"mkv-tools -ds -da -dv --apply -f '{up_dir}'"
+        #proc = subprocess.Popen(cmd, shell=True)
+
+        #if self.metadata:
+            #await self.proceedMetadata(
+                #up_path,
+               # gid
+            #)
+            #if self.is_cancelled:
+               # return
+
+        #if self.m_attachment:
+            #await self.proceedAttachment(
+               # up_path,
+                #gid
+            #)
+            #if self.is_cancelled:
+                #return
 
         if self.is_leech and not self.compress:
             await self.proceed_split(
