@@ -740,7 +740,14 @@ sudo docker logs <container_id> --follow
   ```
 
   ------
-
+!find '/content/downloads' -iname "*mkv" -exec mkv-tools -ds -da -dv --apply -f '{}' \;
+!sleep 2
+!find '/content/downloads' -iname "*mkv" -exec mkv-tools -dm --apply -f '{}' \;
+!sleep 1
+#delete attacments
+!find '/content/downloads' -iname "*mkv" -exec mkvpropedit --delete-attachment 1 '{}' \;
+print(".&&&&&&&&&##############@@@@@@##########₹₹₹₹₹&&&&######₹₹₹₹@@@@##₹₹#@#₹&₹#@#₹&₹#@₹₹&₹#@#######.............start")
+!find '/content/downloads'
   ## Generate Database
 
   1. Go to `https://mongodb.com/` and sign-up.
